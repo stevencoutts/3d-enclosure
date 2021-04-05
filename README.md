@@ -1,1 +1,5 @@
-# Some scripts used to control the enclosure I built for my 3D printer.
+# 3D Enclosure Scripts
+
+pip install paho-mqtt
+sudo apt install libsystemd-dev
+pip install systemd-python
