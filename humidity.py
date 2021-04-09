@@ -6,6 +6,10 @@ import logging
 import paho.mqtt.publish as publish
 import Adafruit_DHT
 
+log = logging.getLogger('mqtt_alarm')
+log.addHandler(JournalHandler())
+log.setLevel(logging.INFO)
+
 DHT_SENSOR = Adafruit_DHT.DHT22
 DHT_PIN = 4
 state_topic = 'enclosure/temperature'
