@@ -18,9 +18,7 @@ state_topic2 = 'enclosure/humidity'
 delay = 5
 
 while True:
-    time.sleep(5)
     humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
-
     if humidity is not None and temperature is not None:
         print("Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(temperature, humidity))
         publish.single(state_topic, temperature, hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username':priv.username, 'password':priv.password})
@@ -29,3 +27,4 @@ while True:
         log.info("Enclosure Humidity -> " + str(round(humidity,1)))
     else:
         print("Failed to retrieve data from humidity sensor")
+    time.sleep(10)
