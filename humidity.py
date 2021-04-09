@@ -3,6 +3,7 @@
 import private as priv
 import time
 import logging
+from systemd.journal import JournalHandler
 import paho.mqtt.publish as publish
 import Adafruit_DHT
 
