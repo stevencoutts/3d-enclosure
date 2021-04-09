@@ -15,7 +15,7 @@ DHT_SENSOR = Adafruit_DHT.DHT22
 DHT_PIN = 4
 state_topic = 'enclosure/temperature'
 state_topic2 = 'enclosure/humidity'
-delay = 5
+delay = 30
 
 while True:
     humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
@@ -27,4 +27,4 @@ while True:
         log.info("Enclosure Humidity -> " + str(round(humidity,1)))
     else:
         print("Failed to retrieve data from humidity sensor")
-    time.sleep(2)
+    time.sleep(delay)
