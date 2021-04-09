@@ -27,4 +27,4 @@ while True:
         log.info("Enclosure Humidity -> " + str(round(humidity,1)))
     else:
         print("Failed to retrieve data from humidity sensor")
-    time.sleep(10)
+    time.sleep(2)
