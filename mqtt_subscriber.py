@@ -29,6 +29,12 @@ IPAddr = socket.gethostbyname(hostname)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(priv.pin, GPIO.OUT)
 
+state = GPIO.input(priv.pin)
+if state:
+   print('on')
+else:
+   print('off')
+
 def on_connect(client, userdata, flags, rc):
   print("Connected with result code {0}".format(str(rc)))
   client.subscribe(priv.MQTT_TOPIC_FAN_PREFIX)
