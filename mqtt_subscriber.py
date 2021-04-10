@@ -14,9 +14,8 @@ import private as priv
 import RPi.GPIO as GPIO
 import logging
 import paho.mqtt.client as mqtt
-from time import sleep
+import paho.mqtt.publish as publish
 from systemd.journal import JournalHandler
-from datetime import datetime
 import socket
 
 log = logging.getLogger('mqtt_alarm')
@@ -29,14 +28,14 @@ IPAddr = socket.gethostbyname(hostname)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(priv.pin, GPIO.OUT)
 
-state = GPIO.input(priv.pin)
-if state:
-   print('on')
-else:
-   print('off')
-
 def on_connect(client, userdata, flags, rc):
   print("Connected with result code {0}".format(str(rc)))
+  state = GPIO.input(priv.pin)
+  publish.single(priv.MQTT_TOPIC_FAN_STATUS_PREFIX, state, hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username': priv.username, 'password': priv.password})
+  if state:
+    print('on')
+  else:
+    print('off')
   client.subscribe(priv.MQTT_TOPIC_FAN_PREFIX)
 
 def on_message(client, userdata, msg):
