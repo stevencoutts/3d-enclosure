@@ -5,3 +5,5 @@ MQTT_TOPIC_HUMID_PREFIX = 'enclosure/humidity'
 username = "homeassistant"
 password = "password"
 pin = 24
+DHT_SENSOR = Adafruit_DHT.DHT22
+DHT_PIN = 4
