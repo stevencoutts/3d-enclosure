@@ -32,10 +32,6 @@ def on_connect(client, userdata, flags, rc):
   print("Connected with result code {0}".format(str(rc)))
   state = GPIO.input(priv.pin)
   publish.single(priv.MQTT_TOPIC_FAN_STATUS_PREFIX, state, hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username': priv.username, 'password': priv.password})
-  if state:
-    print('on')
-  else:
-    print('off')
   client.subscribe(priv.MQTT_TOPIC_FAN_PREFIX)
 
 def on_message(client, userdata, msg):
