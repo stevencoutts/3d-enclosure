@@ -44,8 +44,10 @@ def on_message(client, userdata, msg):
   if 'extractor' in msg.topic:
     if 'off' in msg.payload:
       GPIO.output(priv.pin, 0)
+      publish.single(priv.MQTT_TOPIC_FAN_STATUS_PREFIX, 'off', hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username': priv.username, 'password': priv.password})
     elif 'on' in msg.payload:
       GPIO.output(priv.pin, 1)
+      publish.single(priv.MQTT_TOPIC_FAN_STATUS_PREFIX, 'on', hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username': priv.username, 'password': priv.password})
 
 def subscribe_topic():
   client = mqtt.Client()
