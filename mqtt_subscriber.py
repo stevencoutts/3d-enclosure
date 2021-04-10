@@ -31,7 +31,7 @@ GPIO.setup(priv.pin, GPIO.OUT)
 
 def on_connect(client, userdata, flags, rc):
   print("Connected with result code {0}".format(str(rc)))
-  client.subscribe(priv.MQTT_TOPIC_PREFIX)
+  client.subscribe(priv.MQTT_TOPIC_FAN_PREFIX)
 
 def on_message(client, userdata, msg):
   print("Message received-> " + msg.topic + " " + str(msg.payload))
