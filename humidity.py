@@ -7,6 +7,8 @@ from systemd.journal import JournalHandler
 import paho.mqtt.publish as publish
 import Adafruit_DHT
 
+DHT_SENSOR = Adafruit_DHT.DHT22
+
 log = logging.getLogger('mqtt_alarm')
 log.addHandler(JournalHandler())
 log.setLevel(logging.INFO)
@@ -14,7 +16,7 @@ log.setLevel(logging.INFO)
 delay = 30
 
 while True:
-    humidity, temperature = Adafruit_DHT.read_retry(priv.DHT_SENSOR, priv.DHT_PIN)
+    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, priv.DHT_PIN)
     if humidity is not None and temperature is not None:
         print("Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(temperature, humidity))
         publish.single(priv.MQTT_TOPIC_TEMP_PREFIX, temperature, hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username':priv.username, 'password':priv.password})
