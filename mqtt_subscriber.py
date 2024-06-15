@@ -29,13 +29,13 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(priv.pin, GPIO.OUT)
 
 def on_connect(client, userdata, flags, rc):
-  print("Connected with result code {0}".format(str(rc)))
+  print(("Connected with result code {0}".format(str(rc))))
   state = GPIO.input(priv.pin)
   publish.single(priv.MQTT_TOPIC_FAN_STATUS_PREFIX, state, hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username': priv.username, 'password': priv.password})
   client.subscribe(priv.MQTT_TOPIC_FAN_PREFIX)
 
 def on_message(client, userdata, msg):
-  print("Message received-> " + msg.topic + " " + str(msg.payload))
+  print(("Message received-> " + msg.topic + " " + str(msg.payload)))
   log.info("Message received-> " + msg.topic + " " + str(msg.payload))
   if 'extractor' in msg.topic:
     if 'off' in msg.payload:
@@ -58,5 +58,5 @@ try:
 except KeyboardInterrupt:
   log.info("Stopping...")
 finally:
-  print "*** GPIO Cleanup ***"
+  print("*** GPIO Cleanup ***")
   GPIO.cleanup()
