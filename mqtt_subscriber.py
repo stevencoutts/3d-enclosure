@@ -35,13 +35,13 @@ def on_connect(client, userdata, flags, rc):
   client.subscribe(priv.MQTT_TOPIC_FAN_PREFIX)
 
 def on_message(client, userdata, msg):
-  print(("Message received-> " + msg.topic + " " + str(msg.payload)))
-  log.info("Message received-> " + msg.topic + " " + str(msg.payload))
+  print("Message received-> " + str(msg.topic) + " " + str(msg.payload))
+  log.info("Message received-> " + str(msg.topic) + " " + str(msg.payload))
   if 'extractor' in msg.topic:
-    if 'off' in msg.payload:
+    if 'off' in str(msg.payload):
       GPIO.output(priv.pin, 0)
       publish.single(priv.MQTT_TOPIC_FAN_STATUS_PREFIX, '0', hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username': priv.username, 'password': priv.password})
-    elif 'on' in msg.payload:
+    elif 'on' in str(msg.payload):
       GPIO.output(priv.pin, 1)
       publish.single(priv.MQTT_TOPIC_FAN_STATUS_PREFIX, '1', hostname=priv.MQTT_HOST, client_id='enclosure', auth={'username': priv.username, 'password': priv.password})
 
