@@ -1,0 +1,4 @@
+Adafruit_DHT==1.4.0
+paho-mqtt==1.6.1
+systemd-python==235
+python-dotenv==1.0.0 
