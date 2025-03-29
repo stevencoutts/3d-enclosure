@@ -20,12 +20,21 @@ This project contains scripts for controlling and monitoring a 3D printer enclos
 
 1. Install system dependencies:
 ```bash
-sudo apt install python3-pip libsystemd-dev
+sudo apt install python3-pip libsystemd-dev python3-venv
 ```
 
-2. Install Python dependencies:
+2. Set up the virtual environment:
 ```bash
-pip3 install -r requirements.txt
+# Make the setup script executable
+chmod +x setup_venv.sh
+
+# Run the setup script
+./setup_venv.sh
+```
+
+3. Activate the virtual environment:
+```bash
+source venv/bin/activate
 ```
 
 ## Configuration
@@ -55,6 +64,11 @@ DHT_PIN=4
 
 ## Usage
 
+Make sure the virtual environment is activated:
+```bash
+source venv/bin/activate
+```
+
 1. Start the fan control service:
 ```bash
 python3 mqtt_subscriber.py
@@ -67,7 +81,24 @@ python3 humidity.py
 
 ## Systemd Service Setup
 
-1. Create systemd service files for both scripts
+1. Create systemd service files for both scripts. Make sure to activate the virtual environment in the service files:
+```ini
+[Unit]
+Description=Enclosure Fan Control Service
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/path/to/your/project
+Environment=PATH=/path/to/your/project/venv/bin
+ExecStart=/path/to/your/project/venv/bin/python3 mqtt_subscriber.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
 2. Enable and start the services:
 ```bash
 sudo systemctl enable enclosure-fan
@@ -82,4 +113,11 @@ Logs are written to the systemd journal. View logs with:
 ```bash
 journalctl -u enclosure-fan
 journalctl -u enclosure-monitor
+```
+
+## Development
+
+To deactivate the virtual environment when you're done:
+```bash
+deactivate
 ```
